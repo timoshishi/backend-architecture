@@ -1,11 +1,14 @@
 const express = require('express');
 const app = express();
-const PORT = 3333;
+const logger = require('morgan')('dev');
 
+const PORT = process.env.PORT || 3000;
+
+app.use(logger);
 app.use(express.static('../client/dist'));
 
 app.use(express.json());
 
 app.listen(PORT, () => {
-    console.log('Serving up now at '+ JSON.stringify(PORT))
+  console.log('Serving up now at http://localhost:' + PORT);
 });
