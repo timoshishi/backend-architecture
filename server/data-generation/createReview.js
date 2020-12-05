@@ -13,7 +13,7 @@ const createJsonArray = (arr) => {
   return res + '}';
 };
 
-const createReview = (product_id, review_id) => {
+const createReview = (review_id, product_id) => {
   const urls = createFakeUrlArray();
   return {
     review_id,
