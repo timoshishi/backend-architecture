@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const logger = require('morgan')('dev');
 const PORT = process.env.PORT || 3000;
+const db = require('./db');
 
 app.use(logger);
 app.use(express.static('../client/dist'));

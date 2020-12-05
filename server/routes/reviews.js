@@ -17,7 +17,13 @@ router.get('/:product_id/list', async (req, res) => {
     console.error(e);
   }
   //try catch ...
-  // SELECT * FROM review WHERE product = ${id} AND page = ${page} ORDER BY ${sort} LIMIT = count
+  /* SELECT * FROM reviews 
+  WHERE product = ${ id; }
+   AND page = ${ page; }
+    AND reported != true 
+    ORDER BY ${ sort; } 
+    LIMIT = count;
+  */
   //Model.find({product_id: ${id}}).where({page}).equals(${page}).limit(${count}).sort(${sort})
 
   //FILTER THROUGH THE RETURNED REVIEWS TO REMOVE ANY MARKED AS REPORTED -- MAY NEED TO PERFORM MORE COMPLEX QUERIES TO REDUCE WORK SERVERSIDE
