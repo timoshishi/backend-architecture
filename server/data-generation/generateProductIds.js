@@ -19,20 +19,3 @@ const generateProductIds = (num) => {
 };
 
 module.exports = generateProductIds;
-
-// let tenMil = generateProductIds(10000000);
-
-// const createData = (num) => {
-//   //generate the amount of objects needed using faker in a format that both files can use;
-// };
-
-// const writeData = (num) => {
-//   let productIds = generateProductIds(num); //writes once
-//   //let reviewFile = fs.createWriteStream('data.txt')
-//   //while productIds.length
-
-//   //break data generation into batches
-//   //let currentIds = productIds.splice(-10000)
-//   //let currentUsers = createData(currentIds)
-//   //writeStream.write(')
-// };
