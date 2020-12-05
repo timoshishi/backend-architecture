@@ -1,5 +1,8 @@
-CREATE DATABASE IF NOT EXISTS reviews
+--INSERT INTO review(photos)
+--VALUES ('{http://placeimg.com/640/480,http://placeimg.com/640/480,http://placeimg.com/640/480,http://placeimg.com/640/480}' )
 
+--DELETE FROM review where review_id >= 0;
+DROP TABLE review;
 CREATE TABLE IF NOT EXISTS review(review_id serial primary key,
 product_id integer,
 rating integer,
@@ -13,3 +16,4 @@ email varchar(100),
 reported boolean,
 photos text[5]
 );
+select * from review;
