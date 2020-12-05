@@ -6,7 +6,7 @@ module.exports = {
       port: 5432,
       user: 'postgres',
       password: 'gogogohome',
-      database: 'myDatabase',
+      database: 'reviews',
     },
     migrations: {
       directory: __dirname + '/db/migrations',
@@ -17,7 +17,7 @@ module.exports = {
   },
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL,
+    connection: process.env.DB_HOST_DEV,
     migrations: {
       directory: __dirname + '/db/migrations',
     },
