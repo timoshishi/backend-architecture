@@ -16,7 +16,6 @@ const createJsonArray = (arr) => {
 const createReview = (review_id, product_id) => {
   const urls = createFakeUrlArray();
   return {
-    review_id,
     product_id,
     rating: Math.floor(Math.random() * 6),
     recommend: Math.floor(Math.random() * 2999),

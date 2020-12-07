@@ -2,8 +2,12 @@ const ObjectsToCsv = require('objects-to-csv');
 const createReviewCSV = require('./createReviewCSV');
 const generateProductIds = require('./generateProductIds');
 
-const productIds = generateProductIds(1000000);
-const reviewIds = productIds.map((item, i) => i);
+const productIds = generateProductIds(300000);
+const reviewIds = [];
+for (let i = productIds.length; i >= 0; i--) {
+  reviewIds.push(i);
+}
+// const reviewIds = productIds.map((item, i) => i);
 // console.log('reviewIds.length', reviewIds.length);
 
 const writeData = async () => {

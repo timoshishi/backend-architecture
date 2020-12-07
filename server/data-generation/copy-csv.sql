@@ -12,21 +12,22 @@
 --reported boolean,
 --photos text[5]
 --);
-SELECT * FROM review;
+--SELECT * FROM review;
 
---COPY review(
---product_id,
---rating,
---recommend,
---helpfulness,
---summary,
---body,
---response,
---reviewer_name,
---email,
---reported,
---photos)
---FROM 'C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/server/DATA-G~1/test1.csv'
---DELIMITER ','
---CSV HEADER;
+COPY review(
+review_id,
+product_id,
+rating,
+recommend,
+helpfulness,
+summary,
+body,
+response,
+reviewer_name,
+email,
+reported,
+photos)
+FROM 'C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/server/DATA-G~1/test1.csv'
+DELIMITER ','
+CSV HEADER;
 
