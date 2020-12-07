@@ -17,7 +17,7 @@ const createReview = (review_id, product_id) => {
   const urls = createFakeUrlArray();
   return {
     product_id,
-    rating: Math.floor(Math.random() * 6),
+    rating: Math.floor(Math.random() * (6 - 1) + 1),
     recommend: Math.random > 0.5 ? 1 : 0,
     helpfulness: Math.floor(Math.random() * 200),
     summary: faker.lorem.sentence(),
