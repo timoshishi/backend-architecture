@@ -40,17 +40,7 @@ router.get('/:product_id/list', async (req, res) => {
     res.status(500);
   }
   //try catch ...
-  /* SELECT * FROM reviews 
-  WHERE product = ${ id; }
-   AND page = ${ page; }
-    AND reported != true 
-    ORDER BY ${ sort; } 
-    LIMIT = count;
-  */
   //Model.find({product_id: ${id}}).where({page}).equals(${page}).limit(${count}).sort(${sort})
-
-  //FILTER THROUGH THE RETURNED REVIEWS TO REMOVE ANY MARKED AS REPORTED -- MAY NEED TO PERFORM MORE COMPLEX QUERIES TO REDUCE WORK SERVERSIDE
-  //res.json(review);
 });
 
 router.get('/:product_id/meta', async (req, res) => {
@@ -81,8 +71,7 @@ router.post('/:product_id', async (req, res) => {
     characteristics,
   } = req.body;
   console.log({ rating });
-  // <=== this might work! otherwise just create an object out of the destructured bosy at 36 //newReview = JSON.stringify(newReview) // INSERT into review(reviews) VALUES (newReview) //const review = {rating, summary...} //review = new Review(review) //await review.save()
-  //try catch
+
   const text =
     'INSERT INTO review (product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *';
   const values = [
@@ -105,22 +94,7 @@ router.post('/:product_id', async (req, res) => {
     console.error(error.message, 'CREATE REVIEW');
     res.end();
   }
-  // INSERTING JSON OBJECT INTO JSON AREA POSTGRES
-  /* const newReview = ({
-    rating,
-    summary,
-    body,
-    recommend,
-    name,
-    email,
-    photos,
-    characteristics,
-  } = req.body);
-   */
-  // res
-  //   .status(201)
-  //   .send('Created');
-  //err res.status(500)
+  //newReview = JSON.stringify(newReview) // INSERT into review(reviews) VALUES (newReview) //const review = {rating, summary...} //review = new Review(review) //await review.save()
 });
 
 //MARK AS HELPFUL
@@ -138,7 +112,6 @@ router.put('/helpful/:review_id', async (req, res) => {
     res.json({ 'error at helpful': err.message });
   }
   //try catch
-  //UPDATE review SET helpful = helpful + 1 WHERE review_id = review_id //I will need to perform a more complex query in this
   // const product = await Product.findById(req.params.id)
   //review.reviews.forEach(review => if review.review_id === review_id, review.helpful += 1)
   res.status(204).send('Marked helpful');
@@ -147,14 +120,20 @@ router.put('/helpful/:review_id', async (req, res) => {
 //REPORT
 router.put('/report/:review_id', async (req, res) => {
   const { review_id } = req.params;
-  console.log(review_id);
+  const val = 'helpfulness + 1';
+  try {
+    const row = await pool.query(
+      'UPDATE review SET reported = 1  WHERE review_id = $1',
+      [review_id]
+    );
+    res.status(204).send('NO CONTENT, REPORTED');
+  } catch (err) {
+    res.json({ 'error at helpful': err.message });
+  }
   //try catch
-  //UPDATE review SET reported = true WHERE review_id = review_id //I will need to perform a more complex query in this
-
   // const product = await Product.findById(req.params.id)
   //review.reviews.forEach(review => if review.review_id === review_id, review.reported = true)
   //await product.save
-  res.status(204).send('NO CONTENT, REPORTED');
 });
 
 module.exports = router;
