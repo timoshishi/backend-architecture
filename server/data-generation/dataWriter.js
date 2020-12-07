@@ -1,8 +1,7 @@
 const ObjectsToCsv = require('objects-to-csv');
-const createReview = require('./createReview');
+const createReviewCSV = require('./createReviewCSV');
 const generateProductIds = require('./generateProductIds');
 
-console.timeStamp();
 const productIds = generateProductIds(1000000);
 const reviewIds = productIds.map((item, i) => i);
 // console.log('reviewIds.length', reviewIds.length);
@@ -13,33 +12,19 @@ const writeData = async () => {
   }
 
   //creates a current data set to work with
-  const currentProductIds = productIds.splice(-50000);
+  const currentProductIds = productIds.splice(-100000);
 
   const reviews = currentProductIds.map((productId) => {
-    return createReview(reviewIds.pop(), productId);
+    return createReviewCSV(reviewIds.pop(), productId);
   });
 
   const csv = new ObjectsToCsv(reviews);
   try {
-    // console.time('data');
     await csv.toDisk('./test1.csv', { append: true });
     await console.log('written');
-    // console.timeEnd('data');
     writeData();
   } catch (err) {
     console.error(err.message);
   }
 };
-console.time('reviews');
 writeData();
-console.timeEnd('reviews');
-// const fs = require('fs');
-console.timeStamp();
-// const writerStream = fs
-//   .createWriteStream(`reviews.txt`, { flags: 'a' })
-//   .on('finish', () => console.log('writing finished'))
-//   .on('error', (err) => console.log(err.stack));
-
-// writerStream.write('new output data', () =>
-//   console.log('data has been written')
-// );

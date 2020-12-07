@@ -1,8 +1,8 @@
 const createReview = require('./createReview');
 
 describe('createReview', () => {
-  const fakeUser = createReview(1, 5);
-  const fakeUser2 = createReview(1, 5);
+  const fakeUser = createReview(5, 1);
+  const fakeUser2 = createReview(5, 1);
 
   test('has a product_id of 1', () => {
     expect(fakeUser.product_id).toBe(1);

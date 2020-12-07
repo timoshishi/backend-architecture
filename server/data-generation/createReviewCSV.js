@@ -5,6 +5,14 @@ const createFakeUrlArray = () => {
   return [...new Array(randomQty)].map((item) => faker.image.imageUrl());
 };
 
+const createJsonArray = (arr) => {
+  let res = '{';
+  arr.forEach((url, i) => {
+    i < arr.length - 1 ? (res += url + ',') : (res += url);
+  });
+  return res + '}';
+};
+
 const createReview = (review_id, product_id) => {
   const urls = createFakeUrlArray();
   return {
@@ -19,8 +27,7 @@ const createReview = (review_id, product_id) => {
     reviewer_name: faker.name.findName(),
     email: faker.internet.email(),
     reported: Math.random() > 0.99,
-    photos: urls,
+    photos: createJsonArray(urls),
   };
 };
-console.log(createReview(1, 5));
 module.exports = createReview;
