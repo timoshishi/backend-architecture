@@ -18,7 +18,7 @@ const createReview = (review_id, product_id) => {
     response: Math.random() > 0.95 ? faker.lorem.sentences() : null,
     reviewer_name: faker.name.findName(),
     email: faker.internet.email(),
-    reported: Math.random() > 0.99,
+    reported: Math.random() > 0.99 ? 1 : 0,
     photos: urls,
   };
 };

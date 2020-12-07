@@ -9,13 +9,12 @@
 --response varchar(2000),
 --reviewer_name varchar(100),
 --email varchar(100),
---reported boolean,
+--reported integer,
 --photos text[5]
 --);
 --SELECT * FROM review;
 
 COPY review(
-review_id,
 product_id,
 rating,
 recommend,
@@ -31,3 +30,4 @@ FROM 'C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/server/DATA-G~1/test1
 DELIMITER ','
 CSV HEADER;
 
+SELECT * FROM review;

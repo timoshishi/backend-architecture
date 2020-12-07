@@ -2,19 +2,42 @@ const express = require('express');
 const router = express.Router();
 const reviews = require('../data/dummy-reviews');
 const metadata = require('../data/dummy-meta');
+const pool = require('../db');
 
 router.get('/:product_id/list', async (req, res) => {
-  const { product_id } = req.params;
+  let { product_id } = req.params;
   let { page, count, sort } = req.query;
   count = count || 5;
   page = page || 1;
-  sort = sort || 'newest';
-
-  console.log('single review', { product_id, page, count, sort });
+  sort = sort || 'relevant';
+  product_id = Number(product_id);
+  if (page != 1) {
+  }
   try {
-    res.json(reviews.results.slice(0, count));
+    if (sort === 'relevant') {
+      const results = await pool.query(
+        'SELECT * FROM review WHERE product_id = $1 AND reported != 1 ORDER BY review_id - helpfulness ASC LIMIT $2',
+        [product_id, count]
+      );
+      console.log('res rows', results.rows);
+      await res.send(results.rows);
+    } else {
+      if (sort === 'newest') {
+        sort = 'review_id';
+      }
+      if (sort === 'helpfulness') {
+        sort = 'helpfulness';
+      }
+      console.log({ sort });
+      const results = await pool.query(
+        'SELECT * FROM review WHERE product_id = $1 AND reported != 1 ORDER BY $2 LIMIT $3',
+        [product_id, sort, count]
+      );
+      res.send(results.rows);
+    }
   } catch (e) {
     console.error(e);
+    res.status(500);
   }
   //try catch ...
   /* SELECT * FROM reviews 
@@ -57,10 +80,27 @@ router.post('/:product_id', async (req, res) => {
     photos,
     characteristics,
   } = req.body;
+  console.log({ rating });
   // <=== this might work! otherwise just create an object out of the destructured bosy at 36 //newReview = JSON.stringify(newReview) // INSERT into review(reviews) VALUES (newReview) //const review = {rating, summary...} //review = new Review(review) //await review.save()
   //try catch
+  const text =
+    'INSERT INTO review (product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *';
+  const values = [
+    product_id,
+    rating,
+    recommend,
+    0,
+    summary,
+    body,
+    null,
+    name,
+    email,
+    false,
+    photos,
+  ];
   try {
-    res.status(201).end();
+    let response = await pool.query(text, values);
+    res.status(201).json({ response });
   } catch (error) {
     console.error(error.message, 'CREATE REVIEW');
     res.end();
@@ -86,6 +126,17 @@ router.post('/:product_id', async (req, res) => {
 //MARK AS HELPFUL
 router.put('/helpful/:review_id', async (req, res) => {
   const { review_id } = req.params;
+  console.log({ review_id });
+  const val = 'helpfulness + 1';
+  try {
+    const row = await pool.query(
+      'UPDATE review SET helpfulness = helpfulness + 1  WHERE review_id = $1',
+      [review_id]
+    );
+    res.send('finished');
+  } catch (err) {
+    res.json({ 'error at helpful': err.message });
+  }
   //try catch
   //UPDATE review SET helpful = helpful + 1 WHERE review_id = review_id //I will need to perform a more complex query in this
   // const product = await Product.findById(req.params.id)

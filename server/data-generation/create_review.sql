@@ -13,7 +13,7 @@ body varchar(2000),
 response varchar(2000),
 reviewer_name varchar(100),
 email varchar(100),
-reported boolean,
+reported integer,
 photos text[5]
 );
 select * from review;

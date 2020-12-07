@@ -1,4 +1,4 @@
-const createReview = require('../../utils/createReview');
+const createReview = require('../../data-generation/createReview');
 
 exports.seed = async function (knex, Promise) {
   // const fakeReview = createReview(1, 5);
@@ -12,7 +12,7 @@ exports.seed = async function (knex, Promise) {
   //   .catch((err) => {
   //     console.error(err, 'at knex seed createReviews');
   //   });
-  const reviewArray = [...new Array(1000)].map((item, i) => createReview(1, i));
+  const reviewArray = [...new Array(1000)].map((item, i) => createReview(i, 1));
   console.log(reviewArray);
   return knex('review')
     .del()
