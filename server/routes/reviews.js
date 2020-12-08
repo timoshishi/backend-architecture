@@ -18,7 +18,6 @@ router.get('/:product_id/list', async (req, res) => {
         'SELECT * FROM review WHERE product_id = $1 AND reported != 1 ORDER BY review_id - helpfulness ASC LIMIT $2',
         [product_id, count]
       );
-      console.log('res rows', results.rows);
       await res.send(results.rows);
     } else {
       if (sort === 'newest') {
@@ -81,7 +80,7 @@ router.post('/:product_id', async (req, res) => {
     res.status(201).json({ response });
   } catch (error) {
     console.error(error.message, 'CREATE REVIEW');
-    res.end();
+    res.status(500).end();
   }
   //newReview = JSON.stringify(newReview) // INSERT into review(reviews) VALUES (newReview) //const review = {rating, summary...} //review = new Review(review) //await review.save()
 });
