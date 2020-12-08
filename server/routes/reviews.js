@@ -27,7 +27,6 @@ router.get('/:product_id/list', async (req, res) => {
       if (sort === 'helpfulness') {
         sort = 'helpfulness';
       }
-      console.log({ sort });
       const results = await pool.query(
         'SELECT * FROM review WHERE product_id = $1 AND reported != 1 ORDER BY $2 LIMIT $3',
         [product_id, sort, count]

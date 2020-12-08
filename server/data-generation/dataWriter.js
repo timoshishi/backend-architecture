@@ -2,7 +2,7 @@ const ObjectsToCsv = require('objects-to-csv');
 const createReviewCSV = require('./createReviewCSV');
 const generateProductIds = require('./generateProductIds');
 
-const productIds = generateProductIds(10000000);
+const productIds = generateProductIds(1000000);
 const reviewIds = [];
 for (let i = productIds.length; i >= 0; i--) {
   reviewIds.push(i);
@@ -11,6 +11,7 @@ for (let i = productIds.length; i >= 0; i--) {
 // console.log('reviewIds.length', reviewIds.length);
 
 const writeData = async () => {
+  console.time('data gen');
   if (productIds.length <= 0) {
     return;
   }
@@ -30,5 +31,6 @@ const writeData = async () => {
   } catch (err) {
     console.error(err.message);
   }
+  console.timeEnd('data gen');
 };
 writeData();
