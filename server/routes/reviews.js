@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const reviews = require('../data/dummy-reviews');
 const metadata = require('../data/dummy-meta');
 const pool = require('../db');
 
@@ -60,16 +59,7 @@ router.get('/:product_id/meta', async (req, res) => {
 /* CREATE A NEW REVIEW */
 router.post('/:product_id', async (req, res) => {
   const { product_id } = req.params;
-  const {
-    rating,
-    summary,
-    body,
-    recommend,
-    name,
-    email,
-    photos,
-    characteristics,
-  } = req.body;
+  const { rating, summary, body, recommend, name, email, photos } = req.body;
   console.log({ rating });
 
   const text =
@@ -84,7 +74,7 @@ router.post('/:product_id', async (req, res) => {
     null,
     name,
     email,
-    false,
+    0,
     photos,
   ];
   try {
@@ -100,7 +90,6 @@ router.post('/:product_id', async (req, res) => {
 //MARK AS HELPFUL
 router.put('/helpful/:review_id', async (req, res) => {
   const { review_id } = req.params;
-  console.log({ review_id });
   const val = 'helpfulness + 1';
   try {
     const row = await pool.query(
@@ -120,7 +109,7 @@ router.put('/helpful/:review_id', async (req, res) => {
 //REPORT
 router.put('/report/:review_id', async (req, res) => {
   const { review_id } = req.params;
-  const val = 'helpfulness + 1';
+  // const val = 'helpfulness + 1';
   try {
     const row = await pool.query(
       'UPDATE review SET reported = 1  WHERE review_id = $1',

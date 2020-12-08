@@ -30,4 +30,8 @@ FROM 'C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/server/DATA-G~1/test1
 DELIMITER ','
 CSV HEADER;
 
-SELECT * FROM review;
+--\copy review(product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos) FROM 'C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/server/DATA-G~1/test1.csv' DELIMITER ',' CSV HEADER;
+
+--COPY review(product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos)  FROM PROGRAM 'cmd /c "type C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/server/DATA-G~1/test1.csv"' WITH (format TEXT);
+
+--SELECT * FROM review;

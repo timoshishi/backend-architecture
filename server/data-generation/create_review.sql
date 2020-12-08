@@ -4,7 +4,7 @@
 --DELETE FROM review where review_id >= 0;
 DROP TABLE review;
 CREATE TABLE IF NOT EXISTS review(review_id serial primary key,
-product_id integer,
+product_id integer foreign key,
 rating integer,
 recommend integer,
 helpfulness integer,

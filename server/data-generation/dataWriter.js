@@ -2,7 +2,7 @@ const ObjectsToCsv = require('objects-to-csv');
 const createReviewCSV = require('./createReviewCSV');
 const generateProductIds = require('./generateProductIds');
 
-const productIds = generateProductIds(300000);
+const productIds = generateProductIds(10000000);
 const reviewIds = [];
 for (let i = productIds.length; i >= 0; i--) {
   reviewIds.push(i);
