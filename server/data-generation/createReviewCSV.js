@@ -13,12 +13,12 @@ const createJsonArray = (arr) => {
   return res + '}';
 };
 
-const createReview = (review_id, product_id) => {
+const createReview = (product_id) => {
   const urls = createFakeUrlArray();
   return {
     product_id,
     rating: Math.floor(Math.random() * (6 - 1) + 1),
-    recommend: Math.random > 0.5 ? 1 : 0,
+    recommend: Math.random > 0.3 ? 1 : 0,
     helpfulness: Math.floor(Math.random() * 200),
     summary: faker.lorem.sentence(),
     body: faker.lorem.sentences(Math.floor(Math.random() * 5) + 3),

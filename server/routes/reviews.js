@@ -44,7 +44,31 @@ router.get('/:product_id/meta', async (req, res) => {
   const { product_id } = req.params;
   console.log('metadata', { product_id });
   try {
-    res.json(metadata);
+    const ratings = await pool.query(
+      'SELECT rating, recommend FROM review WHERE product_id = $1',
+      [product_id]
+    );
+    const meta = {
+      ratings: {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      },
+      recommended: {
+        0: 0,
+        1: 0,
+      },
+      characteristics: {},
+    };
+    ratings.rows.forEach((item) => {
+      meta.ratings[item.rating]++;
+      meta.recommended[item.recommend]++;
+    });
+    console.log(ratings.rows);
+
+    res.json(meta);
   } catch (e) {
     console.error(e.message, 'GET METADATA');
   }

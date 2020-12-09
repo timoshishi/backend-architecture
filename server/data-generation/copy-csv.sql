@@ -26,7 +26,7 @@ reviewer_name,
 email,
 reported,
 photos)
-FROM 'C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/server/DATA-G~1/test1.csv'
+FROM 'C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/server/DATA-G~1/reviews.csv'
 DELIMITER ','
 CSV HEADER;
 
