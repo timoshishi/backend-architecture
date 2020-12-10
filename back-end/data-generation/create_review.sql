@@ -14,6 +14,8 @@ email varchar(100),
 reported integer,
 photos text[5],
 recommend integer,
-rating integer
+rating integer,
+date timestamptz
 );
+CREATE INDEX idx_product_id ON review(product_id);
 select * from review;

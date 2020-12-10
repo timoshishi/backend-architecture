@@ -27,6 +27,12 @@ const createReview = (product_id) => {
     email: faker.internet.email(),
     reported: Math.random() > 0.99 ? 1 : 0,
     photos: createJsonArray(urls),
+    date: new Date().toISOString(),
+    fit: Math.floor(Math.random() * 6),
+    len: Math.floor(Math.random() * 6),
+    quality: Math.floor(Math.random() * 6),
+    comfort: Math.floor(Math.random() * 6),
+    width: Math.floor(Math.random() * 6),
   };
 };
 module.exports = createReview;

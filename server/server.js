@@ -1,14 +1,21 @@
 const express = require('express');
+const morgan = require('morgan');
+const path = require('path');
 const app = express();
-const logger = require('morgan')('dev');
-const PORT = process.env.PORT || 3000;
-require('dotenv').config();
+const port = process.env.PORT || 3000;
 
-app.use(logger);
-app.use(express.static('../client/dist'));
-app.use(express.json());
-app.use('/reviews', require('./routes/reviews.js'));
+app.use(morgan('dev'));
 
-app.listen(PORT, () => {
-  console.log('Serving up now at http://localhost:' + PORT);
+app.use(express.static(path.join(__dirname, 'client')));
+
+app.listen(port, () => {
+  console.log(`server running at: http://localhost:${port}`);
+});
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'), (err) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
 });

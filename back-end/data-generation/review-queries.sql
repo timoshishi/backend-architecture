@@ -3,7 +3,7 @@
 
 --Relevant
 --EXPLAIN ANALYZE SELECT * FROM review WHERE product_id = 207768 AND reported != 1 ORDER BY review_id - helpfulness LIMIT 5;
-SELECT * FROM review WHERE product_id = 207768 AND reported != 1 ORDER BY review_id - helpfulness LIMIT 5;
+--SELECT * FROM review WHERE product_id = 207768 AND reported != 1 ORDER BY review_id - helpfulness LIMIT 5;
 
 --Newest
 --EXPLAIN ANALYZE SELECT * FROM review WHERE product_id = 207768 AND reported != 1 ORDER BY review_id LIMIT 5
@@ -19,3 +19,5 @@ SELECT * FROM review WHERE product_id = 207768 AND reported != 1 ORDER BY review
 --UPDATE review SET reported = 1  WHERE review_id = 1;
 
 --SELECT * FROM review WHERE product_id = 805955;
+
+SELECT rating, recommend FROM review WHERE product_id = 8065740;

@@ -1,3 +1,4 @@
+const { urlencoded } = require('express');
 const express = require('express');
 const router = express.Router();
 const metadata = require('../data/dummy-meta');
@@ -7,7 +8,7 @@ router.get('/:product_id/list', async (req, res) => {
   let { product_id } = req.params;
   let { page, count, sort } = req.query;
   count = count || 5;
-  page = page || 1;
+  page = page || 0;
   sort = sort || 'relevant';
   product_id = Number(product_id);
   if (page != 1) {
@@ -15,10 +16,24 @@ router.get('/:product_id/list', async (req, res) => {
   try {
     if (sort === 'relevant') {
       const results = await pool.query(
-        'SELECT * FROM review WHERE product_id = $1 AND reported != 1 ORDER BY review_id - helpfulness ASC LIMIT $2',
+        'SELECT review_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness, photos FROM review WHERE product_id = $1 AND reported != 1 ORDER BY review_id - helpfulness ASC LIMIT $2',
         [product_id, count]
       );
-      await res.send(results.rows);
+      resultTransformed = results.rows.map((result) => ({
+        ...result,
+        photos: result.photos.map((photo) => ({
+          url: photo,
+          thumbnail_url: photo,
+        })),
+      }));
+
+      const returnObj = {
+        product: product_id,
+        page: page,
+        count: count,
+        results: resultTransformed,
+      };
+      await res.json(returnObj);
     } else {
       if (sort === 'newest') {
         sort = 'review_id';
@@ -81,11 +96,20 @@ router.get('/:product_id/meta', async (req, res) => {
 /* CREATE A NEW REVIEW */
 router.post('/:product_id', async (req, res) => {
   const { product_id } = req.params;
-  const { rating, summary, body, recommend, name, email, photos } = req.body;
+  const {
+    rating,
+    summary,
+    body,
+    recommend,
+    name,
+    email,
+    photos,
+    date,
+  } = req.body;
   console.log({ rating });
 
   const text =
-    'INSERT INTO review (product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *';
+    'INSERT INTO review (product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos, date) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *';
   const values = [
     product_id,
     rating,
@@ -98,6 +122,7 @@ router.post('/:product_id', async (req, res) => {
     email,
     0,
     photos,
+    date,
   ];
   try {
     let response = await pool.query(text, values);

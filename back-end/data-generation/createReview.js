@@ -20,6 +20,7 @@ const createReview = (review_id, product_id) => {
     email: faker.internet.email(),
     reported: Math.random() > 0.99 ? 1 : 0,
     photos: urls,
+    date: new Date().toISOString(),
   };
 };
 console.log(createReview(1, 5));

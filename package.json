@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "cd server/ && node server.js",
-    "server": "cd server/ && nodemon server.js",
+    "server": "cd back-end/ && nodemon server.js",
     "build": "webpack --mode production",
     "webpack-dev": "webpack --watch",
     "live-start": "live-server ./dist",
