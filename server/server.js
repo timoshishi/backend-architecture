@@ -2,20 +2,14 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const app = express();
-const port = process.env.PORT || 3000;
 
+const PORT = 3333;
 app.use(morgan('dev'));
+app.use(require('cors')());
+app.use(express.static('../client/dist'));
 
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`server running at: http://localhost:${port}`);
-});
-
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/index.html'), (err) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-  });
+app.listen(PORT, () => {
+  console.log('Serving up now at ' + JSON.stringify(PORT));
 });

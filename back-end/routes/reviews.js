@@ -57,7 +57,6 @@ router.get('/:product_id/list', async (req, res) => {
 
 router.get('/:product_id/meta', async (req, res) => {
   const { product_id } = req.params;
-  console.log('metadata', { product_id });
   try {
     const ratings = await pool.query(
       'SELECT rating, recommend FROM review WHERE product_id = $1',
@@ -81,7 +80,6 @@ router.get('/:product_id/meta', async (req, res) => {
       meta.ratings[item.rating]++;
       meta.recommended[item.recommend]++;
     });
-    console.log(ratings.rows);
 
     res.json(meta);
   } catch (e) {
@@ -106,7 +104,6 @@ router.post('/:product_id', async (req, res) => {
     photos,
     date,
   } = req.body;
-  console.log({ rating });
 
   const text =
     'INSERT INTO review (product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos, date) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *';

@@ -2,11 +2,12 @@ import $ from 'jquery';
 
 const Parse = {
   server: 'http://52.26.193.201:3000/reviews/4',
-  backendServer: `http://localhost:3000/reviews/51`,
+  backendServer: `http://localhost:5000/reviews`,
+  productId: 293922,
   getAllList: function (successCB, errorCB = null) {
     console.log('here');
     $.ajax({
-      url: Parse.backendServer + '/list?count=100&sort=relevant',
+      url: `${Parse.backendServer}/${Parse.productId}/list?count=100&sort=relevant`,
       type: 'GET',
       contentType: 'application/json',
       data: {},
@@ -22,7 +23,7 @@ const Parse = {
   },
   getAllListHelpfulness: function (successCB, errorCB = null) {
     $.ajax({
-      url: Parse.server + '/list?count=100&sort=helpfulness',
+      url: `${Parse.backendServer}/${Parse.productId}/list?count=100&sort=helpfulness`,
       type: 'GET',
       contentType: 'application/json',
       data: {},
@@ -38,7 +39,7 @@ const Parse = {
   },
   getAllListNewest: function (successCB, errorCB = null) {
     $.ajax({
-      url: Parse.server + '/list?count=100&sort=newest',
+      url: `${Parse.backendServer}/${Parse.productId}/list?count=100&sort=newest`,
       type: 'GET',
       contentType: 'application/json',
       data: {},
@@ -54,7 +55,7 @@ const Parse = {
   },
   getProductMeta: function (successCB, errorCB = null) {
     $.ajax({
-      url: Parse.server + '/meta',
+      url: `${Parse.backendServer}/${Parse.productId}/meta`,
       type: 'GET',
       contentType: 'application/json',
       data: {},
@@ -68,7 +69,7 @@ const Parse = {
   },
   markAsHelpful: function (id, successCB, errorCB = null) {
     $.ajax({
-      url: `http://52.26.193.201:3000/reviews/helpful/${id}`,
+      url: `${Parse.backendServer}/helpful/${Parse.productId}`,
       type: 'PUT',
       contentType: 'application/json',
       data: {},
@@ -83,7 +84,7 @@ const Parse = {
   submitReview: function (obj, successCB, errorCB = null) {
     console.log(JSON.stringify(obj));
     $.ajax({
-      url: Parse.server,
+      url: Parse.backendServer,
       type: 'Post',
       contentType: 'application/json',
       data: obj,
@@ -97,7 +98,7 @@ const Parse = {
   },
   getAllProductList: function (successCB, errorCB = null) {
     $.ajax({
-      url: 'http://52.26.193.201:3000/products/list?count=20',
+      url: `http://52.26.193.201:3000/products/list?count=20`,
       type: 'GET',
       contentType: 'application/json',
       data: {},
@@ -111,7 +112,7 @@ const Parse = {
   },
   reportReview: function (id, successCB, errorCB = null) {
     $.ajax({
-      url: `http://52.26.193.201:3000/reviews/report/${id}`,
+      url: `${Parse.backendServer}/report/${Parse.productId}`,
       type: 'PUT',
       contentType: 'application/json',
       data: {},
