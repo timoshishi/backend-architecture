@@ -19,3 +19,5 @@
 --UPDATE review SET reported = 1  WHERE review_id = 1;
 
 --SELECT * FROM review WHERE product_id = 805955;
+
+SELECT rating, recommend FROM review WHERE product_id = 8065740;
