@@ -36,10 +36,46 @@ router.get('/:product_id/list', async (req, res) => {
       await res.json(returnObj);
     } else {
       if (sort === 'newest') {
-        sort = 'review_id';
+        const results = await pool.query(
+          'SELECT review_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness, photos FROM review WHERE product_id = $1 AND reported != 1 ORDER BY review_id ASC LIMIT $2',
+          [product_id, count]
+        );
+        resultTransformed = results.rows.map((result) => ({
+          ...result,
+          photos: result.photos.map((photo) => ({
+            url: photo,
+            thumbnail_url: photo,
+          })),
+        }));
+
+        const returnObj = {
+          product: product_id,
+          page: page,
+          count: count,
+          results: resultTransformed,
+        };
+        await res.json(returnObj);
       }
       if (sort === 'helpfulness') {
-        sort = 'helpfulness';
+        const results = await pool.query(
+          'SELECT review_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness, photos FROM review WHERE product_id = $1 AND reported != 1 ORDER BY helpfulness + 0 DESC LIMIT $2',
+          [product_id, count]
+        );
+        resultTransformed = results.rows.map((result) => ({
+          ...result,
+          photos: result.photos.map((photo) => ({
+            url: photo,
+            thumbnail_url: photo,
+          })),
+        }));
+
+        const returnObj = {
+          product: product_id,
+          page: page,
+          count: count,
+          results: resultTransformed,
+        };
+        await res.json(returnObj);
       }
       const results = await pool.query(
         'SELECT * FROM review WHERE product_id = $1 AND reported != 1 ORDER BY $2 LIMIT $3',
