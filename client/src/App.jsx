@@ -25,7 +25,7 @@ class ReviewApp extends React.Component {
       numberOfReviews: '',
       addReview: 0,
       meta: {},
-      productList: [],
+      productList: 'shoes',
       sortName: 'relevance',
       filterOn: false,
       starFilter: [],
@@ -47,9 +47,10 @@ class ReviewApp extends React.Component {
   }
 
   componentDidMount() {
-    Parse.getAllProductList((productList) => {
-      this.setState({ productList: productList[3].name });
-    });
+    // Parse.getAllProductList((productList) => {
+    //   this.setState({ productList: productList[3].name });
+    // });
+
     Parse.getProductMeta((meta) => {
       this.setState({ meta: meta });
       ReactDOM.render(
@@ -109,7 +110,6 @@ class ReviewApp extends React.Component {
   }
 
   starhelper(stars) {
-    console.log(stars);
     if (this.state[stars]) {
       this.handleClearFilter(stars);
     } else {
@@ -231,8 +231,6 @@ class ReviewApp extends React.Component {
   }
 
   handleSort(sortedName) {
-    console.log(sortedName);
-    console.log(this.state.starFilter);
     if (sortedName === 'newest') {
       this.setState({ sortName: sortedName });
       if (this.state.starFilter.length === 0) {

@@ -5,7 +5,6 @@ const Parse = {
   backendServer: `http://localhost:5000/reviews`,
   productId: 293922,
   getAllList: function (successCB, errorCB = null) {
-    console.log('here');
     $.ajax({
       url: `${Parse.backendServer}/${Parse.productId}/list?count=100&sort=relevant`,
       type: 'GET',
@@ -82,7 +81,6 @@ const Parse = {
     });
   },
   submitReview: function (obj, successCB, errorCB = null) {
-    console.log(JSON.stringify(obj));
     $.ajax({
       url: Parse.backendServer,
       type: 'Post',
