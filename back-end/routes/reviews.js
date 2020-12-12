@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const metadata = require('../data/dummy-meta');
 const pool = require('../db');
-
+const { uuid } = require('uuidv4');
 /* GET  A LIST OF REVIEWS RELATED TO PRODUCT ID */
 router.get('/:product_id/list', async (req, res) => {
   let { product_id } = req.params;
@@ -84,8 +84,8 @@ router.get('/:product_id/list', async (req, res) => {
       );
     }
   } catch (e) {
-    console.error(e);
-    res.status(500);
+    console.error(e.message);
+    res.json({ error: e.message });
   }
 });
 
@@ -101,7 +101,7 @@ router.get('/:product_id/meta', async (req, res) => {
       'SELECT fit, length, comfort, quality, width, size FROM characteristics WHERE product_id = $1',
       [product_id]
     );
-    console.log(characters.rows);
+
     const meta = {
       product_id,
       ratings: {
@@ -121,13 +121,13 @@ router.get('/:product_id/meta', async (req, res) => {
       meta.ratings[item.rating]++;
       meta.recommended[item.recommend]++;
     });
-    Object.keys(characters.rows[0]).forEach((char) => {
+    Object.keys(characters.rows[0]).forEach((char, i) => {
       const upper = firstToUppercase(char);
       const charObj = characters.rows[0];
       if (charObj[char]) {
         meta.characteristics[upper] = {
           value: charObj[char].toString(),
-          id: 1,
+          id: i,
         };
       }
     });

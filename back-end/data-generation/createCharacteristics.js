@@ -1,3 +1,4 @@
+const { uuid } = require('uuidv4');
 const createCharacteristics = (product_id) => {
   const attributes = ['fit', 'length', 'comfort', 'quality', 'width', 'size'];
   let numOfAttributes = Math.floor(Math.random() * attributes.length + 1);
