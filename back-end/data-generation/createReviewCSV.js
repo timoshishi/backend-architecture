@@ -18,7 +18,7 @@ const createReview = (product_id) => {
   return {
     product_id,
     rating: Math.floor(Math.random() * (6 - 1) + 1),
-    recommend: Math.random > 0.3 ? 1 : 0,
+    recommend: Math.random() > 0.3 ? 1 : 0,
     helpfulness: Math.floor(Math.random() * 200),
     summary: faker.lorem.sentence(),
     body: faker.lorem.sentences(Math.floor(Math.random() * 5) + 3),
@@ -28,11 +28,6 @@ const createReview = (product_id) => {
     reported: Math.random() > 0.99 ? 1 : 0,
     photos: createJsonArray(urls),
     date: new Date().toISOString(),
-    fit: Math.floor(Math.random() * 6),
-    len: Math.floor(Math.random() * 6),
-    quality: Math.floor(Math.random() * 6),
-    comfort: Math.floor(Math.random() * 6),
-    width: Math.floor(Math.random() * 6),
   };
 };
 module.exports = createReview;

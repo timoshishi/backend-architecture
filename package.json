@@ -36,6 +36,7 @@
     "jquery": "^3.5.1",
     "knex": "^0.21.12",
     "morgan": "^1.10.0",
+    "newrelic": "^7.0.2",
     "pg": "^8.5.1",
     "react-bootstrap": "^1.4.0",
     "react-bootstrap-star-rating": "^3.5.5-alpha.0.3",

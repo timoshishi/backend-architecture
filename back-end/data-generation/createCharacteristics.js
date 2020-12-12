@@ -1,15 +1,15 @@
-const createCharacteristics = () => {
-  const attributes = ['Fit', 'Length', 'Comfort', 'Quality', 'Width', 'Size'];
+const createCharacteristics = (product_id) => {
+  const attributes = ['fit', 'length', 'comfort', 'quality', 'width', 'size'];
   let numOfAttributes = Math.floor(Math.random() * attributes.length + 1);
 
   const characteristics = {
     product_id,
-    Fit: null,
-    Length: null,
-    Comfort: null,
-    Quality: null,
-    Width: null,
-    Size: null,
+    fit: null,
+    length: null,
+    comfort: null,
+    quality: null,
+    width: null,
+    size: null,
   };
 
   while (numOfAttributes > 0) {
@@ -20,9 +20,9 @@ const createCharacteristics = () => {
         .toFixed(4)
         .toString();
     }
+    numOfAttributes--;
   }
 
   return characteristics;
 };
-console.log(createCharacteristics(5));
 module.exports = createCharacteristics;

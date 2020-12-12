@@ -39,31 +39,33 @@ export let options = {
 // }
 
 export default function () {
-  const id = Math.floor(Math.random() * 10000000);
-  let url = http.get(`http://localhost:3000/reviews/${id}/list`);
-  let postUrl = http.post('http://localhost:3000/reviews/380377');
+  // const id = Math.floor(Math.random() * 10000000);
+  // let url = http.get(`http://localhost:3000/reviews/${id}/list`);
+  // let postUrl = http.post('http://localhost:3000/reviews/380377');
 
-  const body = JSON.stringify({
-    rating: 3,
-    summary: 'API not taking auth correctly',
-    body: 'this a a pretty ccoooool review with at least 50 characters',
-    recommend: 1,
-    name: 'randall',
-    email: 'tim@gmail.com',
-    photos: [
-      'https://loremflickr.com/320/240',
-      'https://loremflickr.com/320/240',
-    ],
-    characteristics: { 10: 5, 11: 5, 12: 5, 13: 5 },
-    date: '2020-12-09T22:16:21.336Z',
+  // const body = JSON.stringify({
+  //   rating: 3,
+  //   summary: 'API not taking auth correctly',
+  //   body: 'this a a pretty ccoooool review with at least 50 characters',
+  //   recommend: 1,
+  //   name: 'randall',
+  //   email: 'tim@gmail.com',
+  //   photos: [
+  //     'https://loremflickr.com/320/240',
+  //     'https://loremflickr.com/320/240',
+  //   ],
+  //   characteristics: { 10: 5, 11: 5, 12: 5, 13: 5 },
+  //   date: '2020-12-09T22:16:21.336Z',
+  // });
+
+  // var params = {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // };
+  check(http.get('http://localhost:3333/'), {
+    'status was 200': (r) => r.status == 200,
   });
-
-  var params = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  check(url, { 'status was 200': (r) => r.status == 200 });
+  // check(url, { 'status was 200': (r) => r.status == 200 });
   // check(postUrl, body, params, { 'status was 201': (r) => r.status == 201 });
 }

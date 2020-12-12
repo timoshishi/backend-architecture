@@ -1,6 +1,8 @@
+require('newrelic');
 const express = require('express');
 const app = express();
 const logger = require('morgan')('dev');
+
 const PORT = process.env.PORT || 5000;
 require('dotenv').config();
 app.use(require('cors')());

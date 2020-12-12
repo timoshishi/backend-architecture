@@ -1,7 +1,6 @@
 
-DROP TABLE review;
+--DROP TABLE review;
 CREATE TABLE IF NOT EXISTS review(
-    review_id integer,
     product_id integer,
     helpfulness integer,
     summary varchar(150),
@@ -13,12 +12,11 @@ CREATE TABLE IF NOT EXISTS review(
     photos text[5],
     recommend integer,
     rating integer,
-    date timestamptz,
+    date timestamptz
 );
 CREATE INDEX idx_product_id ON review(product_id);
 
 COPY review(
-    review_id,
     product_id,
     rating,
     recommend,

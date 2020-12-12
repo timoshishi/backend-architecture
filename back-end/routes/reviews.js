@@ -4,6 +4,7 @@ const router = express.Router();
 const metadata = require('../data/dummy-meta');
 const pool = require('../db');
 
+/* GET  A LIST OF REVIEWS RELATED TO PRODUCT ID */
 router.get('/:product_id/list', async (req, res) => {
   let { product_id } = req.params;
   let { page, count, sort } = req.query;
@@ -81,16 +82,14 @@ router.get('/:product_id/list', async (req, res) => {
         'SELECT * FROM review WHERE product_id = $1 AND reported != 1 ORDER BY $2 LIMIT $3',
         [product_id, sort, count]
       );
-      res.send(results.rows);
     }
   } catch (e) {
     console.error(e);
     res.status(500);
   }
-  //try catch ...
-  //Model.find({product_id: ${id}}).where({page}).equals(${page}).limit(${count}).sort(${sort})
 });
 
+/* GET PRODUCT METADATA */
 router.get('/:product_id/meta', async (req, res) => {
   const { product_id } = req.params;
   try {
@@ -98,7 +97,13 @@ router.get('/:product_id/meta', async (req, res) => {
       'SELECT rating, recommend FROM review WHERE product_id = $1',
       [product_id]
     );
+    const characters = await pool.query(
+      'SELECT fit, length, comfort, quality, width, size FROM characteristics WHERE product_id = $1',
+      [product_id]
+    );
+    console.log(characters.rows);
     const meta = {
+      product_id,
       ratings: {
         1: 0,
         2: 0,
@@ -116,15 +121,21 @@ router.get('/:product_id/meta', async (req, res) => {
       meta.ratings[item.rating]++;
       meta.recommended[item.recommend]++;
     });
-
+    Object.keys(characters.rows[0]).forEach((char) => {
+      const upper = firstToUppercase(char);
+      const charObj = characters.rows[0];
+      if (charObj[char]) {
+        meta.characteristics[upper] = {
+          value: charObj[char].toString(),
+          id: 1,
+        };
+      }
+    });
     res.json(meta);
   } catch (e) {
     console.error(e.message, 'GET METADATA');
+    res.json({ error: e.message });
   }
-  //try catch
-  //SELECT * FROM metadata WHERE product_id = product_id
-  //Model.find({product_id: id})
-  //res.json(metadata)
 });
 
 /* CREATE A NEW REVIEW */
@@ -164,7 +175,6 @@ router.post('/:product_id', async (req, res) => {
     console.error(error.message, 'CREATE REVIEW');
     res.status(500).end();
   }
-  //newReview = JSON.stringify(newReview) // INSERT into review(reviews) VALUES (newReview) //const review = {rating, summary...} //review = new Review(review) //await review.save()
 });
 
 //MARK AS HELPFUL
@@ -176,20 +186,15 @@ router.put('/helpful/:review_id', async (req, res) => {
       'UPDATE review SET helpfulness = helpfulness + 1  WHERE review_id = $1',
       [review_id]
     );
-    res.send('finished');
+    res.status(204).send('finished');
   } catch (err) {
     res.json({ 'error at helpful': err.message });
   }
-  //try catch
-  // const product = await Product.findById(req.params.id)
-  //review.reviews.forEach(review => if review.review_id === review_id, review.helpful += 1)
-  res.status(204).send('Marked helpful');
 });
 
-//REPORT
+//REPORT A REVIEW
 router.put('/report/:review_id', async (req, res) => {
   const { review_id } = req.params;
-  // const val = 'helpfulness + 1';
   try {
     const row = await pool.query(
       'UPDATE review SET reported = 1  WHERE review_id = $1',
@@ -199,10 +204,8 @@ router.put('/report/:review_id', async (req, res) => {
   } catch (err) {
     res.json({ 'error at helpful': err.message });
   }
-  //try catch
-  // const product = await Product.findById(req.params.id)
-  //review.reviews.forEach(review => if review.review_id === review_id, review.reported = true)
-  //await product.save
 });
+/* HELPER FUNCTION */
+const firstToUppercase = (str) => str[0].toUpperCase() + str.slice(1);
 
 module.exports = router;

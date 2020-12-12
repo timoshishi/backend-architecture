@@ -9,6 +9,7 @@ const pool = new Pool({
   password: password,
   host: host,
   port: 5432,
+  max: 99,
   database: 'reviews',
 });
 
