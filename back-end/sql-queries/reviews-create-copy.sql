@@ -16,6 +16,10 @@ CREATE TABLE IF NOT EXISTS review(
     date timestamptz
 );
 
+CREATE INDEX idx_product_id ON review(product_id);
+CREATE INDEX idx_reported ON review(reported) WHERE reported != 1;
+CLUSTER review USING idx_product_id;
+--\copy review(product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos, date) FROM '/home/ubuntu/data/reviews.csv' DELIMITER ',' CSV HEADER;
 
 COPY review(
     product_id,
@@ -34,10 +38,10 @@ FROM 'C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/back-end/DATA-G~1/rev
 DELIMITER ','
 CSV HEADER;
 CREATE INDEX idx_product_id ON review(product_id);
+CREATE INDEX idx_reported ON review(reported) WHERE reported != 1;
 CLUSTER review USING idx_product_id;
 
---\copy review(product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos) FROM 'C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/server/DATA-G~1/reviews.csv' DELIMITER ',' CSV HEADER;
+--\copy review(product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos, date) FROM '/home/ubuntu/data/reviews.csv' DELIMITER ',' CSV HEADER;
 
---COPY review(product_id, rating, recommend, helpfulness, summary, body, response, reviewer_name, email, reported, photos)  FROM PROGRAM 'cmd /c "type C:/Users/timfr/DOCUME~1/github/HACKRE~1/SDC/REVIEW~1/server/DATA-G~1/test1.csv"' WITH (format TEXT);
 
 --SELECT * FROM review;

@@ -21,8 +21,9 @@ const createReview = (product_id) => {
     recommend: Math.random() > 0.3 ? 1 : 0,
     helpfulness: Math.floor(Math.random() * 200),
     summary: faker.lorem.sentence(),
-    body: faker.lorem.sentences(Math.floor(Math.random() * 5) + 3),
-    response: Math.random() > 0.95 ? faker.lorem.sentences() : null,
+    body: faker.lorem.sentences(Math.floor(Math.random() * 3) + 1),
+    response:
+      Math.random() > 0.95 ? faker.lorem.sentences(Math.random * 3) + 1 : null,
     reviewer_name: faker.name.findName(),
     email: faker.internet.email(),
     reported: Math.random() > 0.99 ? 1 : 0,

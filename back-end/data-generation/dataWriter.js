@@ -4,7 +4,7 @@ const generateProductIds = require('./generateProductIds');
 const createCharacteristics = require('./createCharacteristics');
 console.log('started');
 
-const qty = 100000;
+const qty = 10000000;
 const productIds = generateProductIds(qty);
 
 const productCharacteristicIds = [...new Set(productIds)];

@@ -2,8 +2,7 @@ DROP TABLE characteristics;
 
 CREATE TABLE IF NOT EXISTS characteristics(
 characteristic_id serial primary key,
-product_id integer,
-	char_uuid varchar(100),
+    product_id integer,
 	fit real,
 	length real,
 	comfort real,
@@ -15,7 +14,6 @@ product_id integer,
 
 COPY characteristics(
 product_id,
-	char_uuid,
 fit,
 length,
 comfort,
@@ -27,3 +25,5 @@ DELIMITER ','
 CSV HEADER;
 CREATE INDEX idx_prod_id ON characteristics(product_id);
 SELECT * FROM characteristics;
+\tim
+--\copy characteristics(product_id,fit,length,comfort,quality,width,size) FROM '/home/ubuntu/data/characteristics.csv' DELIMITER ',' CSV HEADER;
