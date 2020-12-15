@@ -351,3 +351,6 @@ MigrationBackup/
 
 #test database
 *.csv
+
+#webpack build js file
+bundle.js

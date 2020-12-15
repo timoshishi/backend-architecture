@@ -3,7 +3,7 @@ import $ from 'jquery';
 const Parse = {
   server: 'http://52.26.193.201:3000/reviews/4',
   backendServer: `http://localhost:5000/reviews`,
-  productId: 82268,
+  productId: 5168867,
   getAllList: function (successCB, errorCB = null) {
     console.log('here');
     $.ajax({
