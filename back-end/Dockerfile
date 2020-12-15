@@ -15,7 +15,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 RUN npm install
 COPY . /app
-
+EXPOSE 5000
 #specify what commands to run when running the container
 CMD [ "npm", "start" ]
 # start app
