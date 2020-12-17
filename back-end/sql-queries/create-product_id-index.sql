@@ -1,1 +1,0 @@
-CREATE INDEX idx_product_id ON review(product_id);

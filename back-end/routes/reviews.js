@@ -34,6 +34,7 @@ router.get('/:product_id/list', async (req, res) => {
         count: count,
         results: resultTransformed,
       };
+
       await res.json(returnObj);
     } else {
       if (sort === 'newest') {

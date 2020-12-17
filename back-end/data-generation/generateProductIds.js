@@ -7,7 +7,7 @@
 const generateProductIds = (num) => {
   const productIds = [];
 
-  for (let i = 0; productIds.length <= num; i++) {
+  while (productIds.length <= num) {
     //creates a random index between 1 and maximum number//
     const randomIndex = Math.floor(Math.random() * num + 1);
     //creates a random quantitity of reviews to add to that particular index//
