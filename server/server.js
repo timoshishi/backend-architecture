@@ -1,14 +1,15 @@
 const express = require('express');
+const morgan = require('morgan');
+const path = require('path');
 const app = express();
-const logger = require('morgan')('dev');
-const PORT = process.env.PORT || 3000;
 
-app.use(logger);
+const PORT = 3333;
+app.use(morgan('dev'));
+app.use(require('cors')());
 app.use(express.static('../client/dist'));
+
 app.use(express.json());
-app.use('/reviews', require('./routes/reviews.js'));
-app.use('/products', require('./routes/products.js'));
 
 app.listen(PORT, () => {
-  console.log('Serving up now at http://localhost:' + PORT);
+  console.log('Serving up now at ' + JSON.stringify(PORT));
 });

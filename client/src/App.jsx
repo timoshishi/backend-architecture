@@ -51,7 +51,9 @@ class ReviewApp extends React.Component {
       this.setState({ productList: productList[3].name });
     });
     Parse.getProductMeta((meta) => {
+      console.log({ meta });
       this.setState({ meta: meta });
+      console.log(this.state.meta);
       ReactDOM.render(
         <ProductMeta meta={this.state.meta} getStarReviews={this.starhelper} />,
         document.getElementById('productMeta')
