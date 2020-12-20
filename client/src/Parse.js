@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 const Parse = {
-  server: 'http://34.209.198.50/reviews',
+  server: 'http://44.235.171.62/reviews',
   // backendServer: `http://localhost:5000/reviews`,
   productId: 5168867,
   getAllList: function (successCB, errorCB = null) {

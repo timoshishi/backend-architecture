@@ -2,13 +2,13 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export let options = {
-  vus: 500,
-  duration: '5s',
+  vus: 600,
+  duration: '60s',
 };
 
 export default function () {
   const id = Math.floor(Math.random() * 10000000);
-  let postUrl = http.post(`http://34.209.198.50/reviews/${id}`);
+  let postUrl = http.post(`http://44.235.171.62/reviews/451`);
 
   const body = JSON.stringify({
     rating: 3,
