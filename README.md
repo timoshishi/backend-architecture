@@ -5,13 +5,15 @@
 The intention of this project is to build a horizontally scaled back end for an
 API serving a front end e-commerce store's microservice.
 
-- _Front End_ - deployed on AWS CloudFront CDN.
-
 ### Requirements
 
 - Service must respond to over 1000 requests per second (RPS) with a sub 2%
   error rate and sub 1s response time on a database containing 30 million
   generated records.
+
+## Final Architecture
+
+![](SDC_graphic.png)
 
 ## Key Metrics Achieved
 
